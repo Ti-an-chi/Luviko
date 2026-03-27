@@ -1,23 +1,33 @@
 <!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luviko</title>
+  <title>Formation Manager</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="app">
-    <div id="subs">
-      <div class="sub add-btn" onclick="addPlayer()">+</div>
+    <div id="sidebar-left">
+      <div class="squad-header">
+        <div class="squad-title" contenteditable="true" id="squad-name" spellcheck="false">Squad Name</div>
+        <div class="hint">✏️ Click to edit name & players</div>
+      </div>
+      <div id="subs">
+        <div class="sub add-btn" onclick="openModal('add')">+ Add Player</div>
+      </div>
     </div>
     
     <div id="pitch"></div>
     
     <div id="panel">
       <div id="player-details">
-        <div class="empty-state">Select a player to view details</div>
+        <div class="empty-state">
+          <div class="hint-large">Select a player</div>
+          <div class="hint-small">Click two to swap positions</div>
+        </div>
       </div>
       
       <div id="swap-section" class="hidden">
@@ -32,10 +42,47 @@
       
       <div class="formations">
         <h4>Formation</h4>
-        <button onclick="switchFormation('442')">4-4-2</button>
-        <button onclick="switchFormation('433')">4-3-3</button>
-        <button onclick="switchFormation('352')">3-5-2</button>
-        <button onclick="switchFormation('4231')">4-2-3-1</button>
+        <div class="formation-grid" id="formation-list"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title">Add Player</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Player Name</label>
+          <input type="text" id="input-name" placeholder="e.g. Lionel Messi" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>Position</label>
+          <select id="input-role">
+            <option value="GK">GK - Goalkeeper</option>
+            <option value="CB">CB - Center Back</option>
+            <option value="LB">LB - Left Back</option>
+            <option value="RB">RB - Right Back</option>
+            <option value="LWB">LWB - Left Wing Back</option>
+            <option value="RWB">RWB - Right Wing Back</option>
+            <option value="CDM">CDM - Defensive Mid</option>
+            <option value="CM">CM - Central Mid</option>
+            <option value="CAM">CAM - Attacking Mid</option>
+            <option value="LM">LM - Left Mid</option>
+            <option value="RM">RM - Right Mid</option>
+            <option value="LW">LW - Left Winger</option>
+            <option value="RW">RW - Right Winger</option>
+            <option value="ST">ST - Striker</option>
+            <option value="CF">CF - Center Forward</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" onclick="savePlayer()">Save</button>
       </div>
     </div>
   </div>

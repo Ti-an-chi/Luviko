@@ -1,9 +1,11 @@
 /* app.js */
-const STORAGE_KEY = 'fm_players_v2';
-const STORAGE_FORMATION = 'fm_formation';
+const STORAGE_KEY = 'fm_players_v3';
+const STORAGE_FORMATION = 'fm_formation_v3';
+const STORAGE_SQUAD_NAME = 'fm_squad_name';
 
+// 15 Most Popular Formations (ranked by global usage)
 const formations = {
-  "442": [
+  "442": { name: "4-4-2", slots: [
     {id: 1, x: 50, y: 92, role: "GK"},
     {id: 2, x: 15, y: 75, role: "LB"},
     {id: 3, x: 38, y: 78, role: "CB"},
@@ -15,8 +17,8 @@ const formations = {
     {id: 9, x: 85, y: 50, role: "RM"},
     {id: 10, x: 35, y: 25, role: "ST"},
     {id: 11, x: 65, y: 25, role: "ST"}
-  ],
-  "433": [
+  ]},
+  "433": { name: "4-3-3", slots: [
     {id: 1, x: 50, y: 92, role: "GK"},
     {id: 2, x: 15, y: 75, role: "LB"},
     {id: 3, x: 38, y: 78, role: "CB"},
@@ -28,21 +30,8 @@ const formations = {
     {id: 9, x: 20, y: 30, role: "LW"},
     {id: 10, x: 50, y: 25, role: "ST"},
     {id: 11, x: 80, y: 30, role: "RW"}
-  ],
-  "352": [
-    {id: 1, x: 50, y: 92, role: "GK"},
-    {id: 2, x: 25, y: 78, role: "CB"},
-    {id: 3, x: 50, y: 82, role: "CB"},
-    {id: 4, x: 75, y: 78, role: "CB"},
-    {id: 5, x: 15, y: 55, role: "LWB"},
-    {id: 6, x: 35, y: 60, role: "CM"},
-    {id: 7, x: 50, y: 55, role: "CDM"},
-    {id: 8, x: 65, y: 60, role: "CM"},
-    {id: 9, x: 85, y: 55, role: "RWB"},
-    {id: 10, x: 35, y: 25, role: "ST"},
-    {id: 11, x: 65, y: 25, role: "ST"}
-  ],
-  "4231": [
+  ]},
+  "4231": { name: "4-2-3-1", slots: [
     {id: 1, x: 50, y: 92, role: "GK"},
     {id: 2, x: 15, y: 75, role: "LB"},
     {id: 3, x: 38, y: 78, role: "CB"},
@@ -54,13 +43,187 @@ const formations = {
     {id: 9, x: 50, y: 45, role: "CAM"},
     {id: 10, x: 80, y: 40, role: "RW"},
     {id: 11, x: 50, y: 20, role: "ST"}
-  ]
+  ]},
+  "352": { name: "3-5-2", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 25, y: 78, role: "CB"},
+    {id: 3, x: 50, y: 82, role: "CB"},
+    {id: 4, x: 75, y: 78, role: "CB"},
+    {id: 5, x: 15, y: 55, role: "LWB"},
+    {id: 6, x: 35, y: 60, role: "CM"},
+    {id: 7, x: 50, y: 55, role: "CDM"},
+    {id: 8, x: 65, y: 60, role: "CM"},
+    {id: 9, x: 85, y: 55, role: "RWB"},
+    {id: 10, x: 35, y: 25, role: "ST"},
+    {id: 11, x: 65, y: 25, role: "ST"}
+  ]},
+  "451": { name: "4-5-1", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 15, y: 75, role: "LB"},
+    {id: 3, x: 38, y: 78, role: "CB"},
+    {id: 4, x: 62, y: 78, role: "CB"},
+    {id: 5, x: 85, y: 75, role: "RB"},
+    {id: 6, x: 15, y: 50, role: "LM"},
+    {id: 7, x: 32, y: 55, role: "CM"},
+    {id: 8, x: 50, y: 60, role: "CDM"},
+    {id: 9, x: 68, y: 55, role: "CM"},
+    {id: 10, x: 85, y: 50, role: "RM"},
+    {id: 11, x: 50, y: 25, role: "ST"}
+  ]},
+  "343": { name: "3-4-3", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 25, y: 78, role: "CB"},
+    {id: 3, x: 50, y: 82, role: "CB"},
+    {id: 4, x: 75, y: 78, role: "CB"},
+    {id: 5, x: 20, y: 55, role: "LM"},
+    {id: 6, x: 40, y: 60, role: "CM"},
+    {id: 7, x: 60, y: 60, role: "CM"},
+    {id: 8, x: 80, y: 55, role: "RM"},
+    {id: 9, x: 20, y: 30, role: "LW"},
+    {id: 10, x: 50, y: 25, role: "ST"},
+    {id: 11, x: 80, y: 30, role: "RW"}
+  ]},
+  "541": { name: "5-4-1", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 10, y: 72, role: "LWB"},
+    {id: 3, x: 30, y: 78, role: "CB"},
+    {id: 4, x: 50, y: 82, role: "CB"},
+    {id: 5, x: 70, y: 78, role: "CB"},
+    {id: 6, x: 90, y: 72, role: "RWB"},
+    {id: 7, x: 20, y: 50, role: "LM"},
+    {id: 8, x: 40, y: 55, role: "CM"},
+    {id: 9, x: 60, y: 55, role: "CM"},
+    {id: 10, x: 80, y: 50, role: "RM"},
+    {id: 11, x: 50, y: 25, role: "ST"}
+  ]},
+  "4141": { name: "4-1-4-1", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 15, y: 75, role: "LB"},
+    {id: 3, x: 38, y: 78, role: "CB"},
+    {id: 4, x: 62, y: 78, role: "CB"},
+    {id: 5, x: 85, y: 75, role: "RB"},
+    {id: 6, x: 50, y: 62, role: "CDM"},
+    {id: 7, x: 15, y: 45, role: "LM"},
+    {id: 8, x: 38, y: 50, role: "CM"},
+    {id: 9, x: 62, y: 50, role: "CM"},
+    {id: 10, x: 85, y: 45, role: "RM"},
+    {id: 11, x: 50, y: 25, role: "ST"}
+  ]},
+  "442d": { name: "4-4-2 Diamond", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 15, y: 75, role: "LB"},
+    {id: 3, x: 38, y: 78, role: "CB"},
+    {id: 4, x: 62, y: 78, role: "CB"},
+    {id: 5, x: 85, y: 75, role: "RB"},
+    {id: 6, x: 50, y: 60, role: "CDM"},
+    {id: 7, x: 25, y: 50, role: "LM"},
+    {id: 8, x: 50, y: 45, role: "CAM"},
+    {id: 9, x: 75, y: 50, role: "RM"},
+    {id: 10, x: 35, y: 25, role: "ST"},
+    {id: 11, x: 65, y: 25, role: "ST"}
+  ]},
+  "532": { name: "5-3-2", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 10, y: 72, role: "LWB"},
+    {id: 3, x: 30, y: 78, role: "CB"},
+    {id: 4, x: 50, y: 82, role: "CB"},
+    {id: 5, x: 70, y: 78, role: "CB"},
+    {id: 6, x: 90, y: 72, role: "RWB"},
+    {id: 7, x: 30, y: 55, role: "CM"},
+    {id: 8, x: 50, y: 60, role: "CDM"},
+    {id: 9, x: 70, y: 55, role: "CM"},
+    {id: 10, x: 35, y: 25, role: "ST"},
+    {id: 11, x: 65, y: 25, role: "ST"}
+  ]},
+  "4312": { name: "4-3-1-2", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 15, y: 75, role: "LB"},
+    {id: 3, x: 38, y: 78, role: "CB"},
+    {id: 4, x: 62, y: 78, role: "CB"},
+    {id: 5, x: 85, y: 75, role: "RB"},
+    {id: 6, x: 30, y: 58, role: "CM"},
+    {id: 7, x: 50, y: 63, role: "CDM"},
+    {id: 8, x: 70, y: 58, role: "CM"},
+    {id: 9, x: 50, y: 40, role: "CAM"},
+    {id: 10, x: 35, y: 22, role: "ST"},
+    {id: 11, x: 65, y: 22, role: "ST"}
+  ]},
+  "4222": { name: "4-2-2-2", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 15, y: 75, role: "LB"},
+    {id: 3, x: 38, y: 78, role: "CB"},
+    {id: 4, x: 62, y: 78, role: "CB"},
+    {id: 5, x: 85, y: 75, role: "RB"},
+    {id: 6, x: 35, y: 62, role: "CDM"},
+    {id: 7, x: 65, y: 62, role: "CDM"},
+    {id: 8, x: 25, y: 42, role: "CAM"},
+    {id: 9, x: 75, y: 42, role: "CAM"},
+    {id: 10, x: 35, y: 22, role: "ST"},
+    {id: 11, x: 65, y: 22, role: "ST"}
+  ]},
+  "352a": { name: "3-5-2 Attacking", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 25, y: 78, role: "CB"},
+    {id: 3, x: 50, y: 82, role: "CB"},
+    {id: 4, x: 75, y: 78, role: "CB"},
+    {id: 5, x: 15, y: 58, role: "LM"},
+    {id: 6, x: 35, y: 62, role: "CM"},
+    {id: 7, x: 50, y: 55, role: "CAM"},
+    {id: 8, x: 65, y: 62, role: "CM"},
+    {id: 9, x: 85, y: 58, role: "RM"},
+    {id: 10, x: 35, y: 28, role: "ST"},
+    {id: 11, x: 65, y: 28, role: "ST"}
+  ]},
+  "433f": { name: "4-3-3 False 9", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 15, y: 75, role: "LB"},
+    {id: 3, x: 38, y: 78, role: "CB"},
+    {id: 4, x: 62, y: 78, role: "CB"},
+    {id: 5, x: 85, y: 75, role: "RB"},
+    {id: 6, x: 30, y: 58, role: "CM"},
+    {id: 7, x: 50, y: 63, role: "CDM"},
+    {id: 8, x: 70, y: 58, role: "CM"},
+    {id: 9, x: 20, y: 35, role: "LW"},
+    {id: 10, x: 50, y: 35, role: "CF"},
+    {id: 11, x: 80, y: 35, role: "RW"}
+  ]},
+  "4411": { name: "4-4-1-1", slots: [
+    {id: 1, x: 50, y: 92, role: "GK"},
+    {id: 2, x: 15, y: 75, role: "LB"},
+    {id: 3, x: 38, y: 78, role: "CB"},
+    {id: 4, x: 62, y: 78, role: "CB"},
+    {id: 5, x: 85, y: 75, role: "RB"},
+    {id: 6, x: 15, y: 50, role: "LM"},
+    {id: 7, x: 38, y: 55, role: "CM"},
+    {id: 8, x: 62, y: 55, role: "CM"},
+    {id: 9, x: 85, y: 50, role: "RM"},
+    {id: 10, x: 50, y: 35, role: "CF"},
+    {id: 11, x: 50, y: 20, role: "ST"}
+  ]}
 };
 
 let currentFormation = localStorage.getItem(STORAGE_FORMATION) || "442";
 let selectedIds = [];
+let editingPlayerId = null;
 
-// Data Management
+// Argentina 2022 World Cup Winners (The Smile Team)
+const defaultSquad = [
+  {id: 1, name: "Sylvester", role: "GK"},
+  {id: 2, name: "Vikor", role: "RB"},
+  {id: 3, name: "Bolu", role: "CB"},
+  {id: 4, name: "Kolade", role: "CB", isCaptain: true},
+  {id: 5, name: "Yomi", role: "LB"},
+  {id: 6, name: "Paraboi", role: "CM"},
+  {id: 7, name: "Faruq", role: "DM"},
+  {id: 8, name: "EMINENT", role: "LM"},
+  {id: 9, name: "Suskid", role: "RW"},
+  {id: 10, name: "Dennis", role: "LW"},
+  {id: 11, name: "Sylvester", role: "CF"}, // or use "Jubril" as alternative
+  {id: 12, name: "Dolapo", role: "RW"},
+  {id: 13, name: "Peter", role: "GK"},
+  {id: 14, name: "Imtiaz", role: "DM"}
+];
+
 function loadPlayers() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
@@ -70,61 +233,53 @@ function loadPlayers() {
       console.error("Corrupted save data");
     }
   }
-  // Default squad
-  return [
-    {id: 1, name: "De Gea", role: "GK"},
-    {id: 2, name: "Shaw", role: "LB"},
-    {id: 3, name: "Martinez", role: "CB"},
-    {id: 4, name: "Varane", role: "CB"},
-    {id: 5, name: "Dalot", role: "RB"},
-    {id: 6, name: "Rashford", role: "LM"},
-    {id: 7, name: "Casemiro", role: "CM"},
-    {id: 8, name: "Mainoo", role: "CM"},
-    {id: 9, name: "Antony", role: "RM"},
-    {id: 10, name: "Hojlund", role: "ST"},
-    {id: 11, name: "Garnacho", role: "ST"},
-    {id: 12, name: "Onana", role: "GK"},
-    {id: 13, name: "Maguire", role: "CB"},
-    {id: 14, name: "Lindelof", role: "CB"},
-    {id: 15, name: "Eriksen", role: "CM"},
-    {id: 16, name: "Mount", role: "CAM"},
-    {id: 17, name: "Bruno", role: "CAM"},
-    {id: 18, name: "Sancho", role: "LW"}
-  ];
+  return JSON.parse(JSON.stringify(defaultSquad));
 }
 
 let players = loadPlayers();
+
+// Squad Name
+function loadSquadName() {
+  const saved = localStorage.getItem(STORAGE_SQUAD_NAME);
+  if (saved) {
+    document.getElementById('squad-name').textContent = saved;
+  } else {
+    document.getElementById('squad-name').textContent = "Valor 2023 ⭐⭐⭐";
+  }
+}
+
+document.getElementById('squad-name').addEventListener('blur', function() {
+  localStorage.setItem(STORAGE_SQUAD_NAME, this.textContent);
+});
+
+document.getElementById('squad-name').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    this.blur();
+  }
+});
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(players));
   localStorage.setItem(STORAGE_FORMATION, currentFormation);
 }
 
-// Get slot assignment for a player (null = sub)
-function getSlot(playerId) {
-  const formation = formations[currentFormation];
-  const slot = formation.find(s => s.id === playerId);
-  return slot || null;
-}
-
 function isOnPitch(playerId) {
   const formation = formations[currentFormation];
-  return formation.some(s => s.id === playerId);
+  return formation.slots.some(s => s.id === playerId);
 }
 
-// Formation Switching - Clean Logic
-function switchFormation(name) {
-  if (!formations[name]) return;
+function switchFormation(key) {
+  if (!formations[key]) return;
   
-  const newFormation = formations[name];
+  const newFormation = formations[key];
   const assigned = new Set();
-  const newAssignments = new Map(); // slotId -> playerId
+  const newAssignments = new Map();
   
-  // Step 1: Match by exact role
-  newFormation.forEach(slot => {
+  // Match by role
+  newFormation.slots.forEach(slot => {
     const match = players.find(p => 
-      p.role === slot.role && 
-      !assigned.has(p.id)
+      p.role === slot.role && !assigned.has(p.id)
     );
     if (match) {
       newAssignments.set(slot.id, match.id);
@@ -132,9 +287,9 @@ function switchFormation(name) {
     }
   });
   
-  // Step 2: Fill empty slots with any unassigned players
+  // Fill remaining with any unassigned
   const unassigned = players.filter(p => !assigned.has(p.id));
-  newFormation.forEach(slot => {
+  newFormation.slots.forEach(slot => {
     if (!newAssignments.has(slot.id) && unassigned.length > 0) {
       const player = unassigned.shift();
       newAssignments.set(slot.id, player.id);
@@ -142,18 +297,13 @@ function switchFormation(name) {
     }
   });
   
-  // Step 3: Update player IDs to match their new slots (or subs)
-  // Players in newAssignments get their ID changed to slot.id
-  // Players not in assigned stay as-is (subs)
+  // Rebuild players with new IDs
   const newPlayers = [];
-  
-  // First, handle all players that will be on pitch
   newAssignments.forEach((playerId, slotId) => {
     const player = players.find(p => p.id === playerId);
     newPlayers.push({...player, id: slotId});
   });
   
-  // Then add subs (keep original IDs, ensure no conflicts)
   let nextId = 100;
   players.forEach(p => {
     if (!assigned.has(p.id)) {
@@ -162,24 +312,21 @@ function switchFormation(name) {
   });
   
   players = newPlayers;
-  currentFormation = name;
+  currentFormation = key;
   selectedIds = [];
   save();
   render();
 }
 
-// Selection Logic
 function selectPlayer(id) {
   const idx = selectedIds.indexOf(id);
   
-  // Toggle if already selected
   if (idx !== -1) {
     selectedIds.splice(idx, 1);
     render();
     return;
   }
   
-  // Auto-swap if selecting sub + pitch player
   if (selectedIds.length === 1) {
     const p1 = players.find(p => p.id === selectedIds[0]);
     const p2 = players.find(p => p.id === id);
@@ -187,17 +334,14 @@ function selectPlayer(id) {
     const p2OnPitch = isOnPitch(p2.id);
     
     if (p1OnPitch !== p2OnPitch) {
-      // One is sub, one is pitch - auto swap
       swapPlayers(p1.id, p2.id);
       return;
     }
   }
   
-  // Normal selection (max 2)
   if (selectedIds.length < 2) {
     selectedIds.push(id);
   } else {
-    // Replace second selection
     selectedIds[1] = id;
   }
   
@@ -218,7 +362,6 @@ function swapPlayers(id1, id2) {
   const p1 = players.find(p => p.id === id1);
   const p2 = players.find(p => p.id === id2);
   
-  // Swap IDs (which represent slot assignments)
   const tempId = p1.id;
   p1.id = p2.id;
   p2.id = tempId;
@@ -228,51 +371,67 @@ function swapPlayers(id1, id2) {
   render();
 }
 
-// Player Management
-function addPlayer() {
-  const name = prompt("Player name:");
-  if (!name) return;
+// Modal Functions
+function openModal(type) {
+  const modal = document.getElementById('modal');
+  const title = document.getElementById('modal-title');
+  const nameInput = document.getElementById('input-name');
+  const roleInput = document.getElementById('input-role');
   
-  const role = prompt("Position (e.g., CM, ST, GK):", "SUB") || "SUB";
+  editingPlayerId = null;
   
-  // Find next available ID (100+ for subs)
-  const maxId = Math.max(...players.map(p => p.id), 99);
+  if (type === 'edit' && selectedIds.length === 1) {
+    const player = players.find(p => p.id === selectedIds[0]);
+    editingPlayerId = player.id;
+    title.textContent = 'Edit Player';
+    nameInput.value = player.name;
+    roleInput.value = player.role;
+  } else {
+    title.textContent = 'Add Player';
+    nameInput.value = '';
+    roleInput.value = 'CM';
+  }
   
-  players.push({
-    id: maxId + 1,
-    name: name.trim(),
-    role: role.toUpperCase().trim()
-  });
-  
-  save();
-  render();
+  modal.classList.remove('hidden');
+  nameInput.focus();
 }
 
-function editPlayer(id) {
-  const player = players.find(p => p.id === id);
+function closeModal() {
+  document.getElementById('modal').classList.add('hidden');
+  editingPlayerId = null;
+}
+
+function savePlayer() {
+  const name = document.getElementById('input-name').value.trim();
+  const role = document.getElementById('input-role').value;
   
-  const newName = prompt("New name:", player.name);
-  if (newName === null) return; // Cancelled
+  if (!name) {
+    alert('Please enter a name');
+    return;
+  }
   
-  const newRole = prompt("New position:", player.role);
-  if (newRole === null) return;
+  if (editingPlayerId) {
+    const player = players.find(p => p.id === editingPlayerId);
+    player.name = name;
+    player.role = role;
+  } else {
+    const maxId = Math.max(...players.map(p => p.id), 99);
+    players.push({
+      id: maxId + 1,
+      name: name,
+      role: role
+    });
+  }
   
-  if (newName.trim()) player.name = newName.trim();
-  if (newRole.trim()) player.role = newRole.trim().toUpperCase();
-  
+  closeModal();
   save();
   render();
 }
 
 function deletePlayer(id) {
-  const player = players.find(p => p.id === id);
-  if (!confirm(`Delete ${player.name}?`)) return;
+  if (!confirm('Delete this player?')) return;
   
   players = players.filter(p => p.id !== id);
-  
-  // If we deleted a pitch player, we need to handle the empty slot
-  // The slot will be empty until someone is assigned to it
-  
   selectedIds = selectedIds.filter(sid => sid !== id);
   save();
   render();
@@ -283,7 +442,7 @@ function render() {
   renderPitch();
   renderSubs();
   renderPanel();
-  updateFormationButtons();
+  renderFormations();
 }
 
 function renderPitch() {
@@ -292,9 +451,9 @@ function renderPitch() {
   
   const formation = formations[currentFormation];
   
-  formation.forEach(slot => {
+  formation.slots.forEach(slot => {
     const player = players.find(p => p.id === slot.id);
-    if (!player) return; // Empty slot
+    if (!player) return;
     
     const div = document.createElement('div');
     div.className = 'player';
@@ -305,7 +464,6 @@ function renderPitch() {
       <span class="name">${player.name}</span>
     `;
     
-    // CRITICAL: Use percentage with transform centering
     div.style.left = `${slot.x}%`;
     div.style.top = `${slot.y}%`;
     
@@ -316,15 +474,12 @@ function renderPitch() {
 
 function renderSubs() {
   const container = document.getElementById('subs');
-  // Keep the add button, remove rest
   const addBtn = container.querySelector('.add-btn');
   container.innerHTML = '';
   container.appendChild(addBtn);
   
-  // Find subs (players whose ID doesn't match any slot in current formation)
   const formation = formations[currentFormation];
-  const slotIds = new Set(formation.map(s => s.id));
-  
+  const slotIds = new Set(formation.slots.map(s => s.id));
   const subs = players.filter(p => !slotIds.has(p.id));
   
   subs.forEach(player => {
@@ -346,7 +501,6 @@ function renderPanel() {
   const details = document.getElementById('player-details');
   const swapSection = document.getElementById('swap-section');
   
-  // Single selection - show player details
   if (selectedIds.length === 1) {
     const p = players.find(pl => pl.id === selectedIds[0]);
     const onPitch = isOnPitch(p.id);
@@ -355,11 +509,9 @@ function renderPanel() {
       <div class="player-card-large">
         <div class="role-badge">${p.role}</div>
         <div class="name">${p.name}</div>
-        <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 16px;">
-          ${onPitch ? 'On Pitch' : 'Substitute'}
-        </div>
+        <div class="status-badge">${onPitch ? 'Starting XI' : 'Substitute'}</div>
         <div class="player-actions">
-          <button class="btn-edit" onclick="editPlayer(${p.id})">Edit</button>
+          <button class="btn-edit" onclick="openModal('edit')">Edit</button>
           <button class="btn-delete" onclick="deletePlayer(${p.id})">Delete</button>
         </div>
       </div>
@@ -368,12 +520,11 @@ function renderPanel() {
     return;
   }
   
-  // Two selections - show swap preview
   if (selectedIds.length === 2) {
     const p1 = players.find(pl => pl.id === selectedIds[0]);
     const p2 = players.find(pl => pl.id === selectedIds[1]);
     
-    details.innerHTML = '<div class="empty-state">Two players selected</div>';
+    details.innerHTML = '<div class="empty-state"><div class="hint-large">Swap Players</div></div>';
     
     document.getElementById('swap-p1').innerHTML = `
       <div class="name">${p1.name}</div>
@@ -388,18 +539,38 @@ function renderPanel() {
     return;
   }
   
-  // No selection
-  details.innerHTML = '<div class="empty-state">Select a player to view details<br><br>Click two players to swap</div>';
+  details.innerHTML = `
+    <div class="empty-state">
+      <div class="hint-large">Select a player</div>
+      <div class="hint-small">Click two to swap positions</div>
+    </div>
+  `;
   swapSection.classList.add('hidden');
 }
 
-function updateFormationButtons() {
-  document.querySelectorAll('.formations button').forEach(btn => {
-    btn.classList.toggle('active', 
-      btn.getAttribute('onclick').includes(`'${currentFormation}'`)
-    );
+function renderFormations() {
+  const grid = document.getElementById('formation-list');
+  grid.innerHTML = '';
+  
+  Object.entries(formations).forEach(([key, formation]) => {
+    const btn = document.createElement('button');
+    btn.textContent = formation.name;
+    btn.classList.toggle('active', key === currentFormation);
+    btn.onclick = () => switchFormation(key);
+    grid.appendChild(btn);
   });
 }
 
-// Initialize
+// Close modal on outside click
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Enter key in modal
+document.getElementById('input-name').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') savePlayer();
+});
+
+// Init
+loadSquadName();
 render();
