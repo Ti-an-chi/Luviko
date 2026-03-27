@@ -6,15 +6,15 @@ const STORAGE_SQUAD_NAME = 'fm_squad_name';
 // 15 Most Popular Formations (ranked by global usage)
 const formations = {
   "442": { name: "4-4-2", slots: [
-    {id: 1, x: 50, y: 88, role: "GK"},
+    {id: 1, x: 50, y: 90, role: "GK"},
     {id: 2, x: 15, y: 72, role: "LB"},
     {id: 3, x: 38, y: 74, role: "CB"},
     {id: 4, x: 62, y: 74, role: "CB"},
     {id: 5, x: 85, y: 72, role: "RB"},
-    {id: 6, x: 15, y: 52, role: "LM"},
-    {id: 7, x: 38, y: 54, role: "CM"},
-    {id: 8, x: 62, y: 54, role: "CM"},
-    {id: 9, x: 85, y: 52, role: "RM"},
+    {id: 6, x: 15, y: 48, role: "LM"},
+    {id: 7, x: 38, y: 50, role: "CM"},
+    {id: 8, x: 62, y: 50, role: "CM"},
+    {id: 9, x: 85, y: 48, role: "RM"},
     {id: 10, x: 38, y: 18, role: "ST"},
     {id: 11, x: 62, y: 18, role: "ST"}
   ]},
@@ -24,9 +24,9 @@ const formations = {
     {id: 3, x: 38, y: 74, role: "CB"},
     {id: 4, x: 62, y: 74, role: "CB"},
     {id: 5, x: 85, y: 72, role: "RB"},
-    {id: 6, x: 30, y: 54, role: "CM"},
-    {id: 7, x: 50, y: 58, role: "CDM"},
-    {id: 8, x: 70, y: 54, role: "CM"},
+    {id: 6, x: 30, y: 48, role: "CM"},
+    {id: 7, x: 50, y: 52, role: "CDM"},
+    {id: 8, x: 70, y: 48, role: "CM"},
     {id: 9, x: 18, y: 22, role: "LW"},
     {id: 10, x: 50, y: 16, role: "ST"},
     {id: 11, x: 82, y: 22, role: "RW"}
@@ -207,7 +207,6 @@ let currentFormation = localStorage.getItem(STORAGE_FORMATION) || "442";
 let selectedIds = [];
 let editingPlayerId = null;
 
-// Argentina 2022 World Cup Winners (The Smile Team)
 const defaultSquad = [
   {id: 1, name: "Sylvester", role: "GK"},
   {id: 2, name: "Vikor", role: "RB"},
@@ -216,10 +215,10 @@ const defaultSquad = [
   {id: 5, name: "Yomi", role: "LB"},
   {id: 6, name: "Paraboi", role: "CM"},
   {id: 7, name: "Faruq", role: "DM"},
-  {id: 8, name: "EMINENT", role: "LM"},
+  {id: 8, name: "Eminent", role: "LM"},
   {id: 9, name: "Suskid", role: "RW"},
   {id: 10, name: "Dennis", role: "LW"},
-  {id: 11, name: "Sylvester", role: "CF"}, // or use "Jubril" as alternative
+  {id: 11, name: "Jubril", role: "CF"}, 
   {id: 12, name: "Dolapo", role: "RW"},
   {id: 13, name: "Peter", role: "GK"},
   {id: 14, name: "Imtiaz", role: "DM"}
