@@ -1,0 +1,360 @@
+/* style.css */
+:root {
+  --pitch-green: #166534;
+  --pitch-dark: #14532d;
+  --accent: #22c55e;
+  --panel-bg: #1e293b;
+  --card-bg: #e2e8f0;
+  --danger: #ef4444;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0f172a;
+  color: var(--text);
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+  gap: 10px;
+  padding: 10px;
+}
+
+/* PITCH */
+#pitch {
+  flex: 2;
+  position: relative;
+  background: linear-gradient(to bottom, var(--pitch-green), var(--pitch-dark));
+  border: 3px solid var(--accent);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+#pitch::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(to bottom, transparent 48%, rgba(255,255,255,0.1) 49%, rgba(255,255,255,0.1) 51%, transparent 52%),
+    linear-gradient(to right, transparent 48%, rgba(255,255,255,0.1) 49%, rgba(255,255,255,0.1) 51%, transparent 52%);
+  pointer-events: none;
+}
+
+/* PLAYER CARDS - CENTERED POSITIONING */
+.player {
+  position: absolute;
+  width: 70px;
+  height: 50px;
+  background: var(--card-bg);
+  color: #0f172a;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  /* CRITICAL: Transform centers the card on its coordinate */
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+.player:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 8px 12px rgba(0,0,0,0.4);
+  z-index: 10;
+}
+
+.player.selected {
+  border: 3px solid var(--danger);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+}
+
+.player .role {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.6);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+}
+
+.player .name {
+  font-size: 11px;
+  font-weight: 600;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* SUBS PANEL */
+#subs {
+  width: 100px;
+  background: #020617;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.sub {
+  background: #334155;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 2px solid transparent;
+}
+
+.sub:hover {
+  background: #475569;
+  transform: translateX(3px);
+}
+
+.sub.selected {
+  border-color: var(--danger);
+  background: #1e293b;
+}
+
+.sub.add-btn {
+  background: var(--accent);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 20px;
+  padding: 8px;
+}
+
+.sub .name {
+  font-size: 11px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sub .role {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* MAIN PANEL */
+#panel {
+  width: 280px;
+  background: var(--panel-bg);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+#player-details {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.empty-state {
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 14px;
+}
+
+.player-card-large {
+  text-align: center;
+}
+
+.player-card-large .role-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #0f172a;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.player-card-large .name {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  word-break: break-word;
+}
+
+.player-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.player-actions button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-edit {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-delete {
+  background: var(--danger);
+  color: white;
+}
+
+.player-actions button:hover {
+  opacity: 0.9;
+}
+
+/* SWAP SECTION */
+#swap-section {
+  background: rgba(34, 197, 94, 0.1);
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.swap-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.swap-preview > div {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+}
+
+.swap-preview .name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.swap-preview .role {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.swap-arrow {
+  font-size: 24px;
+  color: var(--accent);
+  padding: 0 8px;
+}
+
+.btn-swap {
+  width: 100%;
+  padding: 12px;
+  background: var(--accent);
+  color: #0f172a;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.btn-cancel {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid #334155;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* FORMATIONS */
+.formations {
+  margin-top: auto;
+  border-top: 1px solid #334155;
+  padding-top: 16px;
+}
+
+.formations h4 {
+  margin: 0 0 12px 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.formations button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 6px;
+  background: #334155;
+  color: var(--text);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.formations button:hover {
+  background: #475569;
+}
+
+.formations button.active {
+  background: var(--accent);
+  color: #0f172a;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  #app {
+    flex-direction: column;
+  }
+  
+  #subs {
+    flex-direction: row;
+    width: 100%;
+    height: 80px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  
+  .sub {
+    min-width: 70px;
+    flex-shrink: 0;
+  }
+  
+  #pitch {
+    height: 50vh;
+  }
+  
+  #panel {
+    width: 100%;
+    max-height: 30vh;
+  }
+}

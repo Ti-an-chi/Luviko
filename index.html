@@ -1,0 +1,45 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luviko</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="subs">
+      <div class="sub add-btn" onclick="addPlayer()">+</div>
+    </div>
+    
+    <div id="pitch"></div>
+    
+    <div id="panel">
+      <div id="player-details">
+        <div class="empty-state">Select a player to view details</div>
+      </div>
+      
+      <div id="swap-section" class="hidden">
+        <div class="swap-preview">
+          <div id="swap-p1"></div>
+          <span class="swap-arrow">⇄</span>
+          <div id="swap-p2"></div>
+        </div>
+        <button class="btn-swap" onclick="executeSwap()">Confirm Swap</button>
+        <button class="btn-cancel" onclick="clearSelection()">Cancel</button>
+      </div>
+      
+      <div class="formations">
+        <h4>Formation</h4>
+        <button onclick="switchFormation('442')">4-4-2</button>
+        <button onclick="switchFormation('433')">4-3-3</button>
+        <button onclick="switchFormation('352')">3-5-2</button>
+        <button onclick="switchFormation('4231')">4-2-3-1</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="app.js"></script>
+</body>
+</html>
