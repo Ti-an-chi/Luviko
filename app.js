@@ -203,7 +203,7 @@ const formations = {
 };
 
 
-let currentFormation = localStorage.getItem(STORAGE_FORMATION) || "442";
+let currentFormation = localStorage.getItem(STORAGE_FORMATION) || "433";
 let selectedIds = [];
 let editingPlayerId = null;
 
