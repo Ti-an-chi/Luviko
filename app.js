@@ -15,8 +15,8 @@ const formations = {
     {id: 7, x: 38, y: 50, role: "CM"},
     {id: 8, x: 62, y: 50, role: "CM"},
     {id: 9, x: 85, y: 48, role: "RM"},
-    {id: 10, x: 38, y: 18, role: "ST"},
-    {id: 11, x: 62, y: 18, role: "ST"}
+    {id: 10, x: 38, y: 18, role: "CF"},
+    {id: 11, x: 62, y: 18, role: "CF"}
   ]},
   "433": { name: "4-3-3", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
@@ -28,7 +28,7 @@ const formations = {
     {id: 7, x: 50, y: 52, role: "DM"},
     {id: 8, x: 70, y: 48, role: "CM"},
     {id: 9, x: 18, y: 22, role: "LW"},
-    {id: 10, x: 50, y: 16, role: "ST"},
+    {id: 10, x: 50, y: 16, role: "CF"},
     {id: 11, x: 82, y: 22, role: "RW"}
   ]},
   "4231": { name: "4-2-3-1", slots: [
@@ -40,22 +40,22 @@ const formations = {
     {id: 6, x: 35, y: 58, role: "DM"},
     {id: 7, x: 65, y: 58, role: "DM"},
     {id: 8, x: 18, y: 38, role: "LW"},
-    {id: 9, x: 50, y: 42, role: "CAM"},
+    {id: 9, x: 50, y: 42, role: "AM"},
     {id: 10, x: 82, y: 38, role: "RW"},
-    {id: 11, x: 50, y: 16, role: "ST"}
+    {id: 11, x: 50, y: 16, role: "CF"}
   ]},
   "352": { name: "3-5-2", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
     {id: 2, x: 25, y: 74, role: "CB"},
     {id: 3, x: 50, y: 76, role: "CB"},
     {id: 4, x: 75, y: 74, role: "CB"},
-    {id: 5, x: 12, y: 46, role: "LWB"},
-    {id: 6, x: 35, y: 52, role: "CM"},
-    {id: 7, x: 50, y: 44, role: "DM"},
-    {id: 8, x: 65, y: 52, role: "CM"},
-    {id: 9, x: 88, y: 46, role: "RWB"},
-    {id: 10, x: 38, y: 18, role: "ST"},
-    {id: 11, x: 62, y: 18, role: "ST"}
+    {id: 5, x: 12, y: 54, role: "LM"},
+    {id: 6, x: 35, y: 56, role: "CM"},
+    {id: 7, x: 50, y: 50, role: "AM"},
+    {id: 8, x: 65, y: 56, role: "CM"},
+    {id: 9, x: 88, y: 54, role: "RM"},
+    {id: 10, x: 38, y: 18, role: "CF"},
+    {id: 11, x: 62, y: 18, role: "CF"}
   ]},
   "451": { name: "4-5-1", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
@@ -68,7 +68,7 @@ const formations = {
     {id: 8, x: 50, y: 52, role: "DM"},
     {id: 9, x: 69, y: 48, role: "CM"},
     {id: 10, x: 88, y: 44, role: "RW"},
-    {id: 11, x: 50, y: 18, role: "ST"}
+    {id: 11, x: 50, y: 18, role: "CF"}
   ]},
   "343": { name: "3-4-3", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
@@ -80,7 +80,7 @@ const formations = {
     {id: 7, x: 60, y: 50, role: "CM"},
     {id: 8, x: 82, y: 48, role: "RM"},
     {id: 9, x: 18, y: 22, role: "LW"},
-    {id: 10, x: 50, y: 16, role: "ST"},
+    {id: 10, x: 50, y: 16, role: "CF"},
     {id: 11, x: 82, y: 22, role: "RW"}
   ]},
   "541": { name: "5-4-1", slots: [
@@ -94,7 +94,7 @@ const formations = {
     {id: 8, x: 40, y: 52, role: "CM"},
     {id: 9, x: 60, y: 52, role: "CM"},
     {id: 10, x: 82, y: 50, role: "RM"},
-    {id: 11, x: 50, y: 18, role: "ST"}
+    {id: 11, x: 50, y: 18, role: "CF"}
   ]},
   "4141": { name: "4-1-4-1", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
@@ -103,11 +103,11 @@ const formations = {
     {id: 4, x: 62, y: 74, role: "CB"},
     {id: 5, x: 85, y: 72, role: "RB"},
     {id: 6, x: 50, y: 58, role: "DM"},
-    {id: 7, x: 12, y: 46, role: "LM"},
+    {id: 7, x: 12, y: 44, role: "LM"},
     {id: 8, x: 37, y: 48, role: "CM"},
     {id: 9, x: 63, y: 48, role: "CM"},
-    {id: 10, x: 88, y: 46, role: "RM"},
-    {id: 11, x: 50, y: 18, role: "ST"}
+    {id: 10, x: 88, y: 44, role: "RM"},
+    {id: 11, x: 50, y: 18, role: "CF"}
   ]},
   "442d": { name: "4-4-2 Diamond", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
@@ -117,10 +117,10 @@ const formations = {
     {id: 5, x: 85, y: 72, role: "RB"},
     {id: 6, x: 50, y: 58, role: "DM"},
     {id: 7, x: 22, y: 48, role: "LM"},
-    {id: 8, x: 50, y: 42, role: "CAM"},
+    {id: 8, x: 50, y: 42, role: "AM"},
     {id: 9, x: 78, y: 48, role: "RM"},
-    {id: 10, x: 38, y: 18, role: "ST"},
-    {id: 11, x: 62, y: 18, role: "ST"}
+    {id: 10, x: 38, y: 18, role: "CF"},
+    {id: 11, x: 62, y: 18, role: "CF"}
   ]},
   "532": { name: "5-3-2", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
@@ -132,8 +132,8 @@ const formations = {
     {id: 7, x: 28, y: 48, role: "CM"},
     {id: 8, x: 50, y: 52, role: "DM"},
     {id: 9, x: 72, y: 48, role: "CM"},
-    {id: 10, x: 38, y: 18, role: "ST"},
-    {id: 11, x: 62, y: 18, role: "ST"}
+    {id: 10, x: 38, y: 18, role: "CF"},
+    {id: 11, x: 62, y: 18, role: "CF"}
   ]},
   "4312": { name: "4-3-1-2", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
@@ -144,9 +144,9 @@ const formations = {
     {id: 6, x: 28, y: 56, role: "CM"},
     {id: 7, x: 50, y: 60, role: "DM"},
     {id: 8, x: 72, y: 56, role: "CM"},
-    {id: 9, x: 50, y: 40, role: "CAM"},
-    {id: 10, x: 38, y: 16, role: "ST"},
-    {id: 11, x: 62, y: 16, role: "ST"}
+    {id: 9, x: 50, y: 40, role: "AM"},
+    {id: 10, x: 38, y: 16, role: "CF"},
+    {id: 11, x: 62, y: 16, role: "CF"}
   ]},
   "4222": { name: "4-2-2-2", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
@@ -156,36 +156,36 @@ const formations = {
     {id: 5, x: 85, y: 72, role: "RB"},
     {id: 6, x: 35, y: 58, role: "DM"},
     {id: 7, x: 65, y: 58, role: "DM"},
-    {id: 8, x: 25, y: 40, role: "CAM"},
-    {id: 9, x: 75, y: 40, role: "CAM"},
-    {id: 10, x: 38, y: 16, role: "ST"},
-    {id: 11, x: 62, y: 16, role: "ST"}
+    {id: 8, x: 25, y: 40, role: "AM"},
+    {id: 9, x: 75, y: 40, role: "AM"},
+    {id: 10, x: 38, y: 16, role: "CF"},
+    {id: 11, x: 62, y: 16, role: "CF"}
   ]},
   "352a": { name: "3-5-2 Attacking", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
     {id: 2, x: 25, y: 74, role: "CB"},
     {id: 3, x: 50, y: 76, role: "CB"},
     {id: 4, x: 75, y: 74, role: "CB"},
-    {id: 5, x: 12, y: 54, role: "LM"},
-    {id: 6, x: 35, y: 56, role: "CM"},
-    {id: 7, x: 50, y: 50, role: "CAM"},
-    {id: 8, x: 65, y: 56, role: "CM"},
-    {id: 9, x: 88, y: 54, role: "RM"},
-    {id: 10, x: 38, y: 18, role: "ST"},
-    {id: 11, x: 62, y: 18, role: "ST"}
+    {id: 5, x: 12, y: 46, role: "LWB"},
+    {id: 6, x: 35, y: 52, role: "CM"},
+    {id: 7, x: 50, y: 44, role: "DM"},
+    {id: 8, x: 65, y: 52, role: "CM"},
+    {id: 9, x: 88, y: 46, role: "RWB"},
+    {id: 10, x: 38, y: 18, role: "CF"},
+    {id: 11, x: 62, y: 18, role: "CF"}
   ]},
-  "433f": { name: "4-3-3 False 9", slots: [
+"433f": { name: "4-3-3 False 9", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
     {id: 2, x: 15, y: 72, role: "LB"},
     {id: 3, x: 38, y: 74, role: "CB"},
     {id: 4, x: 62, y: 74, role: "CB"},
     {id: 5, x: 85, y: 72, role: "RB"},
-    {id: 6, x: 28, y: 56, role: "CM"},
-    {id: 7, x: 50, y: 60, role: "DM"},
-    {id: 8, x: 72, y: 56, role: "CM"},
-    {id: 9, x: 18, y: 28, role: "LW"},
-    {id: 10, x: 50, y: 28, role: "CF"},
-    {id: 11, x: 82, y: 28, role: "RW"}
+    {id: 6, x: 28, y: 48, role: "CM"},
+    {id: 7, x: 50, y: 52, role: "DM"},
+    {id: 8, x: 72, y: 48, role: "CM"},
+    {id: 9, x: 18, y: 22, role: "LW"},
+    {id: 10, x: 50, y: 16, role: "CF"},
+    {id: 11, x: 82, y: 22, role: "RW"}
   ]},
   "4411": { name: "4-4-1-1", slots: [
     {id: 1, x: 50, y: 88, role: "GK"},
@@ -198,7 +198,7 @@ const formations = {
     {id: 8, x: 63, y: 54, role: "CM"},
     {id: 9, x: 88, y: 52, role: "RM"},
     {id: 10, x: 50, y: 32, role: "CF"},
-    {id: 11, x: 50, y: 16, role: "ST"}
+    {id: 11, x: 50, y: 16, role: "CF"}
   ]}
 };
 
