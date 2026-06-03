@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>YP Calculator</title>
+
+<style>
+:root{
+    --bg:#0f172a;
+    --card:#1e293b;
+    --accent:#38bdf8;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:system-ui,sans-serif;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    padding:20px;
+}
+
+.container{
+    max-width:600px;
+    margin:auto;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.card{
+    background:var(--card);
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.tabs{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.tab{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#334155;
+    color:white;
+    cursor:pointer;
+}
+
+.tab.active{
+    background:var(--accent);
+    color:black;
+    font-weight:bold;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:5px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#334155;
+    color:white;
+}
+
+button.calc{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:var(--accent);
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.result{
+    margin-top:20px;
+    background:#0f172a;
+    padding:15px;
+    border-radius:10px;
+}
+
+.formula{
+    color:var(--muted);
+    margin-bottom:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1 class="title">YP Calculator</h1>
+
+<div class="card">
+
+<div class="tabs">
+<button class="tab active" onclick="showTab('single',this)">
+YP Single
+</button>
+
+<button class="tab" onclick="showTab('pep',this)">
+YP PEP
+</button>
+<button class="tab" onclick="showTab('revpep',this)">
+YP Rev→PEP
+</button>
+</div>
+
+<!-- SINGLE RATE -->
+<div class="section active" id="single">
+
+<div class="formula">
+YP = (1 − (1+i)^(-n)) / i
+</div>
+
+<label>Interest Rate (%)</label>
+<input type="number" id="srRate">
+
+<label>Years</label>
+<input type="number" id="srYears">
+
+<button class="calc" onclick="calcSingle()">
+Calculate
+</button>
+
+<div class="result" id="singleResult">
+Awaiting calculation...
+</div>
+
+</div>
+
+<!-- PEP -->
+<div class="section" id="pep">
+
+<div class="formula">
+YP = 1 / i
+</div>
+
+<label>Interest Rate (%)</label>
+<input type="number" id="pepRate">
+
+<button class="calc" onclick="calcPep()">
+Calculate
+</button>
+
+<div class="result" id="pepResult">
+Awaiting calculation...
+</div>
+
+</div>
+
+<!-- Rev PEP-->
+<div class="section" id="revpep">
+
+    <div class="formula">
+        YP = 1 / Ai
+    </div>
+
+    <label>Interest Rate (%)</label>
+    <input type="number" id="revRate">
+
+    <label>Years</label>
+    <input type="number" id="revYears">
+
+    <button class="calc" onclick="calcRevPep()">
+        Calculate
+    </button>
+
+    <div class="result" id="revResult">
+        Awaiting calculation...
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function showTab(id,btn){
+
+document
+.querySelectorAll('.section')
+.forEach(sec=>sec.classList.remove('active'));
+
+document
+.querySelectorAll('.tab')
+.forEach(tab=>tab.classList.remove('active'));
+
+document
+.getElementById(id)
+.classList.add('active');
+
+btn.classList.add('active');
+}
+
+function calcSingle(){
+
+let rate =
+parseFloat(document.getElementById('srRate').value);
+
+let years =
+parseFloat(document.getElementById('srYears').value);
+
+if(!rate || !years){
+alert("Enter valid values");
+return;
+}
+
+let i = rate/100;
+
+let yp =
+(1 - Math.pow(1+i,-years))/i;
+
+document.getElementById('singleResult').innerHTML = `
+<b>YP Single Rate</b><br><br>
+
+Rate: ${rate}%<br>
+Years: ${years}<br><br>
+
+Result:<br>
+<h2>${yp.toFixed(4)}</h2>
+`;
+}
+
+function calcPep(){
+
+let rate =
+parseFloat(document.getElementById('pepRate').value);
+
+if(!rate){
+alert("Enter valid rate");
+return;
+}
+
+let i = rate/100;
+
+let yp = 1/i;
+
+document.getElementById('pepResult').innerHTML = `
+<b>YP Perpetuity</b><br><br>
+
+Rate: ${rate}%<br><br>
+
+Result:<br>
+<h2>${yp.toFixed(4)}</h2>
+`;
+}
+
+function calcRevPep(){
+
+    let rate =
+    parseFloat(document.getElementById('revRate').value);
+
+    let years =
+    parseFloat(document.getElementById('revYears').value);
+
+    if(!rate || !years){
+        alert("Enter valid values");
+        return;
+    }
+
+    let i = rate / 100;
+
+    let A = Math.pow(1 + i, years);
+
+    let Ai = A * i;
+
+    let yp = 1 / Ai;
+
+    document.getElementById('revResult').innerHTML = `
+        <b>YP Reversionary to Perpetuity</b><br><br>
+
+        Interest Rate: ${rate}%<br>
+        Years: ${years}<br><br>
+
+        A = (1+i)<sup>n</sup> = ${A.toFixed(6)}<br>
+        Ai = A × i = ${Ai.toFixed(6)}<br><br>
+
+        <b>YP = 1/Ai</b><br>
+
+        <h2>${yp.toFixed(4)}</h2>
+    `;
+}
+
+</script>
+
+</body>
+</html>
