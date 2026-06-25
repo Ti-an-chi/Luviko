@@ -124,16 +124,23 @@ button.calc{
 <div class="card">
 
 <div class="tabs">
-<button class="tab active" onclick="showTab('single',this)">
-YP Single
-</button>
+    <button class="tab active" onclick="showTab('single',this)">
+        YP Single
+    </button>
 
-<button class="tab" onclick="showTab('pep',this)">
-YP PEP
-</button>
-<button class="tab" onclick="showTab('revpep',this)">
-YP Rev→PEP
-</button>
+    <button class="tab" onclick="showTab('pep',this)">
+        YP PEP
+    </button>
+    <button class="tab" onclick="showTab('revpep',this)">
+        YP Rev→PEP
+    </button>
+    <button class="tab" onclick="showTab('dual',this)">
+        YP Dual
+    </button>
+
+    <button class="tab" onclick="showTab('pv',this)">
+        PV
+    </button>
 </div>
 
 <!-- SINGLE RATE -->
@@ -202,6 +209,52 @@ Awaiting calculation...
 
 </div>
 
+<div class="section" id="dual">
+
+<div class="formula">
+YP = 1 / ( i + SF )
+</div>
+
+<label>Yield Rate (%)</label>
+<input type="number" id="dualYield">
+
+<label>Sinking Fund Rate (%)</label>
+<input type="number" id="dualSfRate">
+
+<label>Years</label>
+<input type="number" id="dualYears">
+
+<button class="calc" onclick="calcDual()">
+Calculate
+</button>
+
+<div class="result" id="dualResult">
+Awaiting calculation...
+</div>
+
+</div>
+
+<div class="section" id="pv">
+
+<div class="formula">
+PV = 1 / (1+i)^n
+</div>
+
+<label>Interest Rate (%)</label>
+<input type="number" id="pvRate">
+
+<label>Years</label>
+<input type="number" id="pvYears">
+
+<button class="calc" onclick="calcPV()">
+Calculate
+</button>
+
+<div class="result" id="pvResult">
+Awaiting calculation...
+</div>
+
+</div>
 </div>
 
 </div>
@@ -312,6 +365,73 @@ function calcRevPep(){
 
         <h2>${yp.toFixed(4)}</h2>
     `;
+}
+
+function calcDual(){
+
+let yieldRate =
+parseFloat(document.getElementById('dualYield').value);
+
+let sfRate =
+parseFloat(document.getElementById('dualSfRate').value);
+
+let years =
+parseFloat(document.getElementById('dualYears').value);
+
+if(!yieldRate || !sfRate || !years){
+alert("Enter valid values");
+return;
+}
+
+let i = yieldRate / 100;
+
+let s = sfRate / 100;
+
+let sf =
+s / (Math.pow(1+s, years)-1);
+
+let yp =
+1 / (i + sf);
+
+document.getElementById('dualResult').innerHTML = `
+<b>YP Dual Rate</b><br><br>
+
+Yield Rate: ${yieldRate}%<br>
+Sinking Fund Rate: ${sfRate}%<br>
+Years: ${years}<br><br>
+
+SF = ${sf.toFixed(6)}<br><br>
+
+<h2>${yp.toFixed(4)}</h2>
+`;
+}
+
+function calcPV(){
+
+let rate =
+parseFloat(document.getElementById('pvRate').value);
+
+let years =
+parseFloat(document.getElementById('pvYears').value);
+
+if(!rate || !years){
+alert("Enter valid values");
+return;
+}
+
+let i = rate / 100;
+
+let pv =
+1 / Math.pow(1+i, years);
+
+document.getElementById('pvResult').innerHTML = `
+<b>Present Value</b><br><br>
+
+Rate: ${rate}%<br>
+Years: ${years}<br><br>
+
+<h2>${pv.toFixed(6)}</h2>
+`;
 }
 
 </script>
